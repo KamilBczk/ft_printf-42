@@ -1,2 +1,5 @@
-# ft_printf-42
-ft_printf function school 42
+# ft_printf-42 📝
+
+Recreate the printf function in c (school 42).
+
+## Warning ⚠ not finished
