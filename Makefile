@@ -6,7 +6,7 @@
 #    By: kamilbiczyk <kamilbiczyk@student.42.fr>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/23 19:41:49 by kbiczyk           #+#    #+#              #
-#    Updated: 2021/09/24 21:24:00 by kamilbiczyk      ###   ########.fr        #
+#    Updated: 2021/09/24 21:44:02 by kamilbiczyk      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,7 +39,7 @@ SRC = $(addprefix $(SRC_DIR), $(SRC_NAME))
 OBJS = $(addprefix $(OBJS_DIR), $(OBJS_NAME))
 
 ${NAME}:${OBJS}
-	@ar rc ${NAME} ${OBJS}
+	@ar -rcs ${NAME} ${OBJS} $(SRC_DIR)ft_printf.h
 #	@gcc -o ${NAME} ${OBJS}
 	@echo "\n${GREEN}$(NAME) is ready${NC}"
 	@echo "${CURRENT}"
@@ -54,7 +54,7 @@ ${NAME}:${OBJS}
 ${OBJS_DIR}%.o:${SRC_DIR}%.c
 	@mkdir -p $(OBJS_DIR)
 	@echo "${CURRENT}Compiling: \"$<\"${NC}"
-	@clang -c $< -o $@
+	@gcc -c $< -o $@ $(FLAGS)
 
 all: $(NAME)
 
