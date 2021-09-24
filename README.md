@@ -1,4 +1,4 @@
-# ft_printf 📒
+# ft_printf 📝
 
 Recreate the printf function in C.
 
@@ -36,6 +36,8 @@ The result of tests
 ![results](/img/img2.png)
 The main file
 ![main](img/img3.png)
+![main2](img/img4.png)
+
 
 ## License 📜
 Thanks for @Tripouille > [printfTester](https://github.com/Tripouille/printftester)
