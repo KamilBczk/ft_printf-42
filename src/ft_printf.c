@@ -6,18 +6,18 @@
 /*   By: kamilbiczyk <kamilbiczyk@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/12 13:04:57 by kamilbiczyk       #+#    #+#             */
-/*   Updated: 2021/09/24 15:10:40 by kamilbiczyk      ###   ########.fr       */
+/*   Updated: 2021/09/24 17:24:14 by kamilbiczyk      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void	ft_printf_x(unsigned int nb)
+int	ft_printf_x(unsigned int nb)
 {
-	
+	return (0);
 }
 
-void	ft_printf_p(unsigned int var)
+int	ft_printf_p(unsigned int var)
 {
 	char	*x;
 
@@ -27,82 +27,99 @@ void	ft_printf_p(unsigned int var)
 	{
 		ft_printf_p(var/16);
 	}
+	return (0);
 }
 
-void	ft_printf_check_percentage(char s, va_list arg)
+void	ft_printf_check_percentage(char s, va_list arg, int *finallen)
 {
 	if (s == 'c')
-		ft_printf_c(va_arg(arg, int));
+		*finallen += ft_printf_c(va_arg(arg, int));
 	else if (s == 's')
-		ft_printf_s(va_arg(arg, char *));
+		*finallen += ft_printf_s(va_arg(arg, char *));
 	else if (s == 'p')
-		ft_printf_p((unsigned long int) va_arg(arg, void *));
+		*finallen += ft_printf_p((unsigned long int) va_arg(arg, void *));
 	else if (s == 'd')
-		ft_printf_d_i(va_arg(arg, int));
+		*finallen += ft_printf_d_i(va_arg(arg, int), 0);
 	else if (s == 'i')
-		ft_printf_d_i(va_arg(arg, int));
+		*finallen += ft_printf_d_i(va_arg(arg, int), 0);
 	else if (s == 'u')
-		ft_printf_u(va_arg(arg, unsigned int));
+		*finallen += ft_printf_u(va_arg(arg, unsigned int), 0);
 	else if (s == 'x')
 		ft_printf_x(va_arg(arg, unsigned int));
 	else if (s == 'X')
 		return ;
 	else if (s == '%')
+	{
+		*finallen += 1;
 		write(1, "%", 1);
+	}
 }
 
 int	ft_printf(const char *t, ...)
 {
 	int		i;
+	int		finallen;
 	va_list	arg;
 
 	i = 0;
+	finallen = 0;
 	va_start(arg, t);
 	while (t[i] != '\0')
 	{
 		if (t[i] == '%')
 		{
 			i++;
-			ft_printf_check_percentage((char) t[i], arg);
+			ft_printf_check_percentage((char) t[i], arg, &finallen);
 		}
 		else
 		{
+			finallen++;
 			write(1, &t[i], 1);
 		}
 		i++;
 	}
-	return (0);
+	return (finallen);
 }
 
 int	main(void)
 {
+	int		ret_ft_printf;
+	int		ret_printf;
 	void	*x;
 	void	*test;
 
-	ft_printf("\n*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*\n\n");
-	ft_printf("Le caractère : \t\t\t|%c| |%c|\t\n", 'a', 'z');
-	printf("La vraie fonction renvoie : \t|%c| |%c|\n", 'a', 'z');
-	ft_printf("\n*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*\n\n");
-	ft_printf("La chaîne de caractère : \t|%s| |%s|\n", "Bonjour", " Kamil");
-	printf("La vraie fonction renvoie : \t|%s| |%s|\n", "Bonjour", " Kamil");
-	ft_printf("\n*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*\n\n");
-	ft_printf("L'argument de pointeur void *: \t|%p| |%p|\n", x, test);
-	printf("La vraie fonction renvoie : \t|%p| |%p|\n", x, test);
-	ft_printf("\n*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*\n\n");
-	ft_printf("Nombre en base 10 : \t\t|%d| |%d|\n", 123456, -424242);
-	printf("La vraie fonction renvoie : \t|%d| |%d|\n", 123456, -424242);
-	ft_printf("\n*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*\n\n");
-	ft_printf("Entier en base 10 : \t\t|%i| |%i|\n", 123456, -424242);
-	printf("La vraie fonction renvoie : \t|%i| |%i|\n", 123456, -424242);
-	ft_printf("\n*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*\n\n");
-	ft_printf("Nombre décimal non signé : \t|%u| |%u| |%u|\n", -1, 42, 65353);
-	printf("La vraie fonction renvoie : \t|%u| |%u| |%u|\n", -1, 42, 65353);
-	ft_printf("\n*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*\n\n");
-	ft_printf("Nombre en héxadécimal base 16 : |%x| |%x|\n", 922337203, -424242);
-	printf("La vraie fonction renvoie : \t|%x| |%x|\n", 922337203, -424242);
-	ft_printf("\n*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*\n\n");
-	ft_printf("Pourcentage \t\t\t|%%| |%%|\n");
-	ft_printf("Le caractère : \t\t\t|%%| |%%|\t\n");
+	printf("\n============================= %%d =============================\n\n");
+	ret_ft_printf = ft_printf("ft_printf : \t|%c| |%c|\n", 'a', 'z');
+	ret_printf = printf("   printf : \t|%c| |%c|\n", 'a', 'z');
+	printf("\nValeur retournées :\tft_printf : \t%d\n\t\t\tprintf : \t%d\n", ret_ft_printf, ret_printf);
+	printf("\n============================= %%s =============================\n\n");
+	ret_ft_printf = ft_printf("ft_printf : \t|%s| |%s|\n", "Bonjour", " Kamil");
+	ret_printf = printf("   printf : \t|%s| |%s|\n", "Bonjour", " Kamil");
+	printf("\nValeur retournées :\tft_printf : \t%d\n\t\t\tprintf : \t%d\n", ret_ft_printf, ret_printf);
+	printf("\n============================= %%p =============================\n\n");
+	ret_ft_printf = ft_printf("ft_printf : \t|%p| |%p|\n", x, test);
+	ret_printf = printf("   printf : \t|%p| |%p|\n", x, test);
+	printf("\nValeur retournées :\tft_printf : \t%d\n\t\t\tprintf : \t%d\n", ret_ft_printf, ret_printf);
+	printf("\n============================= %%d =============================\n\n");
+	ret_ft_printf = ft_printf("ft_printf : \t|%d| |%d|\n", 123456, -424242);
+	ret_printf = printf("   printf : \t|%d| |%d|\n", 123456, -424242);
+	printf("\nValeur retournées :\tft_printf : \t%d\n\t\t\tprintf : \t%d\n", ret_ft_printf, ret_printf);
+	printf("\n============================= %%i =============================\n\n");
+	ret_ft_printf = ft_printf("ft_printf : \t|%i| |%i|\n", 123456, -424242);
+	ret_printf = printf("   printf : \t|%i| |%i|\n", 123456, -424242);
+	printf("\nValeur retournées :\tft_printf : \t%d\n\t\t\tprintf : \t%d\n", ret_ft_printf, ret_printf);
+	printf("\n============================= %%u =============================\n\n");
+	ret_ft_printf = ft_printf("ft_printf : \t|%u| |%u| |%u|\n", -1, 42, 65353);
+	ret_printf = printf("   printf : \t|%u| |%u| |%u|\n", -1, 42, 65353);
+	printf("\nValeur retournées :\tft_printf : \t%d\n\t\t\tprintf : \t%d\n", ret_ft_printf, ret_printf);
+	printf("\n============================= %%x =============================\n\n");
+	ret_ft_printf = ft_printf("ft_printf : \t|%x| |%x|\n", 922337203, -424242);
+	ret_printf = printf("   printf : \t|%x| |%x|\n", 922337203, -424242);
+	printf("\nValeur retournées :\tft_printf : \t%d\n\t\t\tprintf : \t%d\n", ret_ft_printf, ret_printf);
+	printf("\n============================= %%%% =============================\n\n");
+	ret_ft_printf = ft_printf("ft_printf : \t|%%| |%%|\n");
+	ret_printf = printf("   printf : \t|%%| |%%|\n");
+	printf("\nValeur retournées :\tft_printf : \t%d\n\t\t\tprintf : \t%d\n", ret_ft_printf, ret_printf);
 	ft_printf("\n*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*\n\n");
 	ft_printf("                        FINISH                           \n\n");
 	ft_printf("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*\n");
