@@ -6,7 +6,7 @@
 #    By: kamilbiczyk <kamilbiczyk@student.42.fr>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/23 19:41:49 by kbiczyk           #+#    #+#              #
-#    Updated: 2021/09/24 17:06:29 by kamilbiczyk      ###   ########.fr        #
+#    Updated: 2021/09/24 21:24:00 by kamilbiczyk      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,18 +27,20 @@ RM = rm -f
 
 SRC_NAME = 	ft_printf.c\
 			ft_printf_strings.c\
-			ft_printf_numbers.c
+			ft_printf_numbers.c\
+			ft_printf_hexa.c
 
 OBJS_NAME =	ft_printf.o\
 			ft_printf_strings.o\
-			ft_printf_numbers.o
+			ft_printf_numbers.o\
+			ft_printf_hexa.o
 
 SRC = $(addprefix $(SRC_DIR), $(SRC_NAME))
 OBJS = $(addprefix $(OBJS_DIR), $(OBJS_NAME))
 
 ${NAME}:${OBJS}
-#	@ar rc ${NAME} ${OBJS}
-	@gcc -o ${NAME} ${OBJS}
+	@ar rc ${NAME} ${OBJS}
+#	@gcc -o ${NAME} ${OBJS}
 	@echo "\n${GREEN}$(NAME) is ready${NC}"
 	@echo "${CURRENT}"
 	@echo "██████╗ ██████╗ ██╗███╗   ██╗████████╗███████╗   ██╗  ██╗██████╗ ██╗ ██████╗███████╗██╗   ██╗██╗  ██╗"
