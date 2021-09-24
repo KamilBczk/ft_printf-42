@@ -6,13 +6,13 @@
 /*   By: kamilbiczyk <kamilbiczyk@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/23 19:09:12 by kbiczyk           #+#    #+#             */
-/*   Updated: 2021/09/24 14:33:25 by kamilbiczyk      ###   ########.fr       */
+/*   Updated: 2021/09/24 17:09:56 by kamilbiczyk      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void	ft_printf_s(char *str)
+int	ft_printf_s(char *str)
 {
 	int	i;
 
@@ -20,9 +20,11 @@ void	ft_printf_s(char *str)
 	while (str[i] != '\0')
 		i++;
 	write(1, str, i);
+	return (i);
 }
 
-void	ft_printf_c(char c)
+int	ft_printf_c(char c)
 {
 	write(1, &c, 1);
+	return (1);
 }
