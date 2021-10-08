@@ -4,7 +4,7 @@ Recreate the printf function in C.
 
 ## Score 🎯
 ------
-Not graded yet
+100%
 
 ## Installation 🧩
 ------
