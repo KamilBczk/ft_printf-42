@@ -6,7 +6,7 @@
 /*   By: kamilbiczyk <kamilbiczyk@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/24 21:21:48 by kamilbiczyk       #+#    #+#             */
-/*   Updated: 2021/09/24 21:27:41 by kamilbiczyk      ###   ########.fr       */
+/*   Updated: 2021/10/01 14:27:47 by kbiczyk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	ft_printf_x(unsigned int nb, int *finallen, int tohex)
 	}
 }
 
-void ft_printf_hexadecimal(unsigned long int nb, int *finallen)
+void	ft_printf_hexadecimal(unsigned long int nb, int *finallen)
 {
 	char	z;
 
